@@ -83,16 +83,16 @@ train_control <- trainControl(method = "cv", number = 5, classProbs = TRUE, summ
 metric <- "ROC"
 
 # Lasso model
-lasso_grid <- expand.grid(alpha = 1, lambda = 10^seq(-5, 3, length = 100))
+lasso_grid <- expand.grid(alpha = 1, lambda = 10^seq(-5, 5, length = 100))
 lasso_model_final <- train(ChurnYes ~ ., data = train_data_smote, method = "glmnet", 
                            trControl = train_control, tuneGrid = lasso_grid, metric = metric)
 
 # Ridge model
-ridge_grid <- expand.grid(alpha = 0, lambda = 10^seq(-3, 3, length = 100))
+ridge_grid <- expand.grid(alpha = 0, lambda = 10^seq(-5, 5, length = 100))
 ridge_model_final <- train(ChurnYes ~ ., data = train_data_smote, method = "glmnet", trControl = train_control, tuneGrid = ridge_grid, metric = metric)
 
 # Elastic Net model
-elastic_grid <- expand.grid(alpha = seq(0, 1, length = 10), lambda = 10^seq(-3, 3, length = 100))
+elastic_grid <- expand.grid(alpha = seq(0, 1, length = 10), lambda = 10^seq(-5, 5, length = 100))
 elastic_model_final <- train(ChurnYes ~ ., data = train_data_smote, method = "glmnet", trControl = train_control, tuneGrid = elastic_grid, metric = metric)
 
 # Function to evaluate the model based on different metrics
